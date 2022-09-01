@@ -25,7 +25,7 @@ public class Movie {
     private String moviePicture;
     @Column(length = 100)
     private String movieTrailer;
-    @ManyToMany(mappedBy = "movie")
+    @ManyToMany(mappedBy = "movies")
     private Set<Character> characters;
     @ManyToOne
     @JoinColumn(name = "franchiseId")
