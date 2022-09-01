@@ -8,5 +8,5 @@ public interface CrudService <T, ID> {
     T add(T entity);
     T update(T entity);
     void deleteById(ID id);
-    boolean exists(ID id);
+
 }
