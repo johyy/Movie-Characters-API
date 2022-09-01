@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Setter
@@ -20,8 +21,12 @@ public class Character {
     private String characterGender;
     @Column(length = 100)
     private String characterPicture;
-    @ManyToOne
-    @JoinColumn(name = "movieId")
-    private Movie movie;
+    @ManyToMany
+    @JoinTable(
+            name = "character_movie",
+            joinColumns = {@JoinColumn(name = "character_id")},
+            inverseJoinColumns = {@JoinColumn(name = "movie_id")}
+    )
+    private Set<Movie> movies;
 
 }

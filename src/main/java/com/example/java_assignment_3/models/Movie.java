@@ -17,14 +17,16 @@ public class Movie {
     private String movieTitle;
     @Column(length = 50)
     private String movieGenre;
+    @Column(length = 5)
+    private String movieReleaseYear;
     @Column(length = 50)
     private String movieDirector;
     @Column(length = 100)
     private String moviePicture;
     @Column(length = 100)
     private String movieTrailer;
-    @OneToMany(mappedBy = "movie")
-    private Set<Character> charachter;
+    @ManyToMany(mappedBy = "movie")
+    private Set<Character> characters;
     @ManyToOne
     @JoinColumn(name = "franchiseId")
     private Franchise franchise;
