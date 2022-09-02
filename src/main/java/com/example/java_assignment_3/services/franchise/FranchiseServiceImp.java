@@ -21,27 +21,28 @@ public class FranchiseServiceImp implements FranchiseService {
     }
 
     @Override
-    public Franchise findById(Integer integer) {
-        return null;
+    public Franchise findById(Integer id) {
+        return franchiseRepository.findById(id).get();
     }
 
     @Override
     public Collection<Franchise> findAll() {
-        return null;
+        return franchiseRepository.findAll();
     }
 
     @Override
-    public Franchise add(Franchise entity) {
-        return null;
+    public Franchise add(Franchise franchise) {
+        return franchiseRepository.save(franchise);
     }
 
     @Override
-    public Franchise update(Franchise entity) {
-        return null;
+    public Franchise update(Franchise franchise) {
+        return franchiseRepository.save(franchise);
     }
 
     @Override
-    public void deleteById(Integer integer) {
+    public void deleteById(Integer id) {
+        franchiseRepository.deleteById(id);
 
     }
 }

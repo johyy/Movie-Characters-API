@@ -19,28 +19,28 @@ public class CharacterServiceImp implements CharacterService{
     }
 
     @Override
-    public Character findById(Integer integer) {
-        return null;
+    public Character findById(Integer id) {
+        return characterRepository.findById(id).get();
     }
 
     @Override
     public Collection<Character> findAll() {
-        return null;
+        return characterRepository.findAll();
     }
 
     @Override
-    public Character add(Character entity) {
-        return null;
+    public Character add(Character character) {
+        return characterRepository.save(character);
     }
 
     @Override
-    public Character update(Character entity) {
-        return null;
+    public Character update(Character character) {
+        return characterRepository.save(character);
     }
 
     @Override
-    public void deleteById(Integer integer) {
-
+    public void deleteById(Integer id) {
+        characterRepository.deleteById(id);
     }
 
 }

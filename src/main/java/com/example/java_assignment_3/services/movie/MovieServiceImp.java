@@ -19,27 +19,27 @@ public class MovieServiceImp implements  MovieService {
     }
 
     @Override
-    public Movie findById(Integer integer) {
-        return null;
+    public Movie findById(Integer id) {
+        return movieRepository.findById(id).get();
     }
 
     @Override
     public Collection<Movie> findAll() {
-        return null;
+        return movieRepository.findAll();
     }
 
     @Override
-    public Movie add(Movie entity) {
-        return null;
+    public Movie add(Movie movie) {
+        return movieRepository.save(movie);
     }
 
     @Override
-    public Movie update(Movie entity) {
-        return null;
+    public Movie update(Movie movie) {
+        return movieRepository.save(movie);
     }
 
     @Override
-    public void deleteById(Integer integer) {
-
+    public void deleteById(Integer id) {
+        movieRepository.deleteById(id);
     }
 }
