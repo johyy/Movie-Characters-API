@@ -1,4 +1,4 @@
- More readable naming and defining the Heroku app name
+
 variables:
   # Tag it with commit reference
   CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
