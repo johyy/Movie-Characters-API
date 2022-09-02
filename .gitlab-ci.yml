@@ -32,7 +32,6 @@ heroku:
     - docker:dind
   rules:
     - if: '$CI_COMMIT_REF_PROTECTED == "true"'
-  when: manual
   before_script:
     - docker info
     - apk add --no-cache curl
