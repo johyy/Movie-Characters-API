@@ -21,6 +21,7 @@ public class Character {
     private String characterGender;
     @Column(length = 100)
     private String characterPicture;
+
     @ManyToMany
     @JoinTable(
             name = "character_movie",
