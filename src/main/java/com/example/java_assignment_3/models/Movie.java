@@ -33,7 +33,6 @@ public class Movie {
     )
     private Set<Character> characters;
     @ManyToOne
-    @JoinColumn(name = "franchiseId")
+    @JoinColumn(name = "franchise_id")
     private Franchise franchise;
-
 }

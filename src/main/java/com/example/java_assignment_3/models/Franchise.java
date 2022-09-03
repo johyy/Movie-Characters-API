@@ -18,5 +18,5 @@ public class Franchise {
     @Column(length = 100)
     private String franchiseDescription;
     @OneToMany(mappedBy = "franchise")
-    private Set<Movie> movie;
+    private Set<Movie> movies;
 }
