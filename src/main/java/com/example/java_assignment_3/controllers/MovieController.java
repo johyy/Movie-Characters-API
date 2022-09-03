@@ -5,7 +5,6 @@ import com.example.java_assignment_3.models.Movie;
 import com.example.java_assignment_3.models.dtos.movie.MovieDTO;
 import com.example.java_assignment_3.services.movie.MovieService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -35,8 +34,7 @@ public class MovieController {
         return  ResponseEntity.ok(movie);
     }
 
-    // does not work
-   /* @PostMapping
+    @PostMapping
     public ResponseEntity add(@RequestBody Movie movie) {
         Movie m = movieService.add(movie);
         URI location = URI.create("movies/" + m.getId());
@@ -46,13 +44,12 @@ public class MovieController {
 
     @PutMapping("{id}")
     public ResponseEntity update(@RequestBody MovieDTO movieDTO, @PathVariable int id) {
-        if (id != movieDTO.getId()) {
+        if (id != movieDTO.getId())
             return ResponseEntity.badRequest().build();
-        }
-
-        movieService.update(movieMapper.movieDtoToMovie(movieDTO));
+        movieService.update(movieMapper.movieDtoToMovie(movieDTO)
+        );
         return ResponseEntity.noContent().build();
-    }*/
+    }
 
     @DeleteMapping("{id}")
     public ResponseEntity delete(@PathVariable int id) {

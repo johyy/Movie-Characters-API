@@ -17,7 +17,7 @@ public class Movie {
     private String movieTitle;
     @Column(length = 50)
     private String movieGenre;
-    @Column(length = 5)
+    @Column(length = 10)
     private String movieReleaseYear;
     @Column(length = 50)
     private String movieDirector;
@@ -33,7 +33,10 @@ public class Movie {
     )
     private Set<Character> characters;
     @ManyToOne
-    @JoinColumn(name = "franchiseId")
+    @JoinColumn(name = "franchise_id")
     private Franchise franchise;
 
+    public int getId() {
+        return id;
+    }
 }
