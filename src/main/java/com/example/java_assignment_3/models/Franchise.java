@@ -12,7 +12,7 @@ import java.util.Set;
 public class Franchise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int franchiseId;
+    private int id;
     @Column(length = 50)
     private String franchiseName;
     @Column(length = 100)

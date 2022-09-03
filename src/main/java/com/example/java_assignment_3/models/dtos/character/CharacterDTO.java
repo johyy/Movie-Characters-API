@@ -7,7 +7,7 @@ import java.util.Set;
 @Data
 public class CharacterDTO {
 
-    private int characterId;
+    private int id;
     private String characterName;
     private String characterAlias;
     private String characterGender;
