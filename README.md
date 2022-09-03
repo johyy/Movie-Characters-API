@@ -31,6 +31,7 @@ Rules:
 8. A CI/CD pipeline should be built as a Docker artifact, and a second job should be added to deploy the application to Heroku with a manual trigger.
 
 Data requirements:
+
 _Character:_
 - Autoincremented Id
 - Full name
