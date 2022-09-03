@@ -12,7 +12,7 @@ import java.util.Set;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int movieId;
+    private int id;
     @Column(length = 50, nullable = false)
     private String movieTitle;
     @Column(length = 50)
@@ -25,9 +25,15 @@ public class Movie {
     private String moviePicture;
     @Column(length = 100)
     private String movieTrailer;
-    @ManyToMany(mappedBy = "movies")
+    @ManyToMany
+    @JoinTable(
+            name = "movie_character",
+            joinColumns = {@JoinColumn(name = "movie_id")},
+            inverseJoinColumns = {@JoinColumn(name = "character_id")}
+    )
     private Set<Character> characters;
     @ManyToOne
     @JoinColumn(name = "franchiseId")
     private Franchise franchise;
+
 }

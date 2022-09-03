@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Data
 public class MovieDTO {
-    private int movieId;
+    private int id;
     private String movieTitle;
     private String movieGenre;
     private String movieReleaseYear;

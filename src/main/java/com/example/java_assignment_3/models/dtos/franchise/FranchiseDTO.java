@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Data
 public class FranchiseDTO {
-    private int franchiseId;
+    private int id;
     private String franchiseName;
     private String franchiseDescription;
     private Set<Integer> movies;
