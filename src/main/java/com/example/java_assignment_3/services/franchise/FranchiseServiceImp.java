@@ -41,6 +41,10 @@ public class FranchiseServiceImp implements FranchiseService {
 
     @Override
     public void deleteById(Integer id) {
+        if(franchiseRepository.existsById(id)){
+            Franchise franchise = franchiseRepository.findById(id).get();
+            franchise.getMovies().forEach(m -> m.setFranchise(null));
+        }
         franchiseRepository.deleteById(id);
     }
 

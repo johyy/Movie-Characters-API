@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -55,5 +56,15 @@ public class Movie {
         if (characters != null)
             return characters.stream().map(s -> s.getId()).collect(Collectors.toList());
         return null;
+    }
+
+    public void removeCharacter(Character character){
+        Iterator<Character> iter = characters.iterator();
+        while(iter.hasNext()) {
+            Character chars = iter.next();
+            if(chars.getId() == character.getId()){
+                iter.remove();
+            }
+        }
     }
 }

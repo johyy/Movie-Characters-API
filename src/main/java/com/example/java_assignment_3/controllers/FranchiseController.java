@@ -6,6 +6,7 @@ import com.example.java_assignment_3.models.Movie;
 import com.example.java_assignment_3.models.dtos.franchise.FranchiseDTO;
 import com.example.java_assignment_3.models.dtos.movie.MovieDTO;
 import com.example.java_assignment_3.services.franchise.FranchiseService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,18 +25,21 @@ public class FranchiseController {
         this.franchiseMapper = franchiseMapper;
     }
 
+    @Operation(summary = "Get all franchises")
     @GetMapping
     public ResponseEntity findAll() {
         Collection<FranchiseDTO> franchises = franchiseMapper.franchiseToFranchiseDto(franchiseServise.findAll());
         return ResponseEntity.ok(franchises);
     }
 
+    @Operation(summary = "Get a franchise")
     @GetMapping("{id}")
     public ResponseEntity findById(@PathVariable int id){
         FranchiseDTO franchise = franchiseMapper.franchiseToFranchiseDto(franchiseServise.findById(id));
         return  ResponseEntity.ok(franchise);
     }
 
+    @Operation(summary = "Add a new franchise")
     @PostMapping
     public ResponseEntity add(@RequestBody Franchise franchise) {
         Franchise fra = franchiseServise.add(franchise);
@@ -44,6 +48,7 @@ public class FranchiseController {
         // return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @Operation(summary = "Update a franchise")
     @PutMapping("{id}")
     public ResponseEntity update(@RequestBody FranchiseDTO franchiseDTO, @PathVariable int id) {
         if (id != franchiseDTO.getId())
@@ -53,6 +58,7 @@ public class FranchiseController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Delete a franchise")
     @DeleteMapping("{id}")
     public ResponseEntity delete(@PathVariable int id) {
         franchiseServise.deleteById(id);

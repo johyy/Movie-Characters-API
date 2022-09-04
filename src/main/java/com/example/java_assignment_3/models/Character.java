@@ -27,4 +27,11 @@ public class Character {
     public int getId() {
         return id;
     }
+
+    @PreRemove
+    public void removeCharacterFromMovie(){
+        for (Movie m : movies){
+            m.removeCharacter(this);
+        }
+    }
 }
