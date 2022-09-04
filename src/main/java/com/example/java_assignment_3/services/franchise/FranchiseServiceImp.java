@@ -1,9 +1,8 @@
 package com.example.java_assignment_3.services.franchise;
 
-import com.example.java_assignment_3.models.Character;
 import com.example.java_assignment_3.models.Franchise;
+import com.example.java_assignment_3.models.Movie;
 import com.example.java_assignment_3.repositories.FranchiseRepository;
-import com.example.java_assignment_3.services.character.CharacterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -43,6 +42,7 @@ public class FranchiseServiceImp implements FranchiseService {
     @Override
     public void deleteById(Integer id) {
         franchiseRepository.deleteById(id);
-
     }
+
+
 }

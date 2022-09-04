@@ -43,4 +43,13 @@ public class CharacterServiceImp implements CharacterService{
         characterRepository.deleteById(id);
     }
 
+    @Override
+    public Collection<Character> findAllCharactersByMovieId(int id) {
+        return characterRepository.findAllCharactersByMovieId(id);
+    }
+
+    @Override
+    public Collection<Character> findAllCharactersByFranchiseId(int id) {
+        return characterRepository.findAllCharactersByMovieId(id);
+    }
 }

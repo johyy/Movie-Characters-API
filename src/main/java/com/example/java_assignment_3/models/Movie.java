@@ -1,10 +1,13 @@
 package com.example.java_assignment_3.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Setter
@@ -38,5 +41,19 @@ public class Movie {
 
     public int getId() {
         return id;
+    }
+
+    @JsonGetter("franchise")
+    public Integer jsonGetFranchise() {
+        if (franchise != null)
+            return franchise.getId();
+        return null;
+    }
+
+    @JsonGetter("characters")
+    public List<Integer> jsonGetCharacters() {
+        if (characters != null)
+            return characters.stream().map(s -> s.getId()).collect(Collectors.toList());
+        return null;
     }
 }
