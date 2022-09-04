@@ -12,6 +12,6 @@ public class CharacterDTO {
     private String characterAlias;
     private String characterGender;
     private String characterPicture;
-    private Set<Integer> movies;
+    //private Set<Integer> movies;
 
 }
