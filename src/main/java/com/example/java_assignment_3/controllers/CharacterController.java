@@ -36,6 +36,16 @@ public class CharacterController {
         return  ResponseEntity.ok(character);
     }
 
+    @GetMapping("movie/{id}")
+    public ResponseEntity<Collection<Character>> findAllCharactersByMovieId(@PathVariable int id) {
+        return ResponseEntity.ok(characterService.findAllCharactersByMovieId(id));
+    }
+
+    @GetMapping("franchise/{id}")
+    public ResponseEntity<Collection<Character>> findAllCharactersByFranchiseId(@PathVariable int id) {
+        return ResponseEntity.ok(characterService.findAllCharactersByFranchiseId(id));
+    }
+
     @PostMapping
     public ResponseEntity add(@RequestBody Character character) {
         Character c = characterService.add(character);

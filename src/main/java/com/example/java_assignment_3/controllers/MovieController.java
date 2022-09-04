@@ -28,6 +28,11 @@ public class MovieController {
         return ResponseEntity.ok(movies);
     }
 
+    @GetMapping("franchise/{id}")
+    public ResponseEntity<Collection<Movie>> findAllMoviesByFranchiseId(@PathVariable int id) {
+        return ResponseEntity.ok(movieService.findAllMoviesByFranchiseId(id));
+    }
+
     @GetMapping("{id}")
     public ResponseEntity findById(@PathVariable int id){
         MovieDTO movie = movieMapper.movieToMovieDto(movieService.findById(id));
