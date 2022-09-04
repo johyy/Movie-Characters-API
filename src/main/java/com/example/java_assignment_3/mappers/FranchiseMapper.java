@@ -18,7 +18,6 @@ public abstract class FranchiseMapper {
     @Autowired
     protected MovieService movieService;
 
-
     @Mapping(target = "movies", source = "movies", qualifiedByName = "moviesToIds")
     public abstract FranchiseDTO franchiseToFranchiseDto(Franchise franchise);
 
