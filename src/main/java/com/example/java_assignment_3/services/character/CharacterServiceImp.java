@@ -1,14 +1,13 @@
 package com.example.java_assignment_3.services.character;
 
+import com.example.java_assignment_3.exceptions.CharacterNotFoundException;
 import com.example.java_assignment_3.models.Character;
-import com.example.java_assignment_3.models.Movie;
 import com.example.java_assignment_3.repositories.CharacterRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Set;
 
 @Service
 public class CharacterServiceImp implements CharacterService{
@@ -22,7 +21,7 @@ public class CharacterServiceImp implements CharacterService{
 
     @Override
     public Character findById(Integer id) {
-        return characterRepository.findById(id).orElse(null);
+        return characterRepository.findById(id).orElseThrow(() -> new CharacterNotFoundException(id));
     }
 
     @Override

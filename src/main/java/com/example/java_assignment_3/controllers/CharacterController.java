@@ -6,7 +6,14 @@ import com.example.java_assignment_3.models.Movie;
 import com.example.java_assignment_3.models.dtos.character.CharacterDTO;
 import com.example.java_assignment_3.models.dtos.movie.MovieDTO;
 import com.example.java_assignment_3.services.character.CharacterService;
+import com.example.java_assignment_3.util.ApiErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +33,20 @@ public class CharacterController {
     }
 
     @Operation(summary = "Get all characters")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Success",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = CharacterDTO.class))) }),
+            @ApiResponse(responseCode = "404",
+                    description = "Character does not exist with supplied ID",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = ApiErrorResponse.class)) })
+    })
     @GetMapping
     public ResponseEntity findAll() {
         Collection<CharacterDTO> characters = characterMapper.characterToCharacterDto(characterService.findAll());
@@ -33,6 +54,16 @@ public class CharacterController {
     }
 
     @Operation(summary = "Get a character by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Success",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CharacterDTO.class)) }),
+            @ApiResponse(responseCode = "404",
+                    description = "Character does not exist with supplied ID",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class)) })
+    })
     @GetMapping("{id}")
     public ResponseEntity findById(@PathVariable int id){
         CharacterDTO character = characterMapper.characterToCharacterDto(characterService.findById(id));
@@ -40,12 +71,32 @@ public class CharacterController {
     }
 
     @Operation(summary = "Get characters in a movie")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Success",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CharacterDTO.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Characters do not exist with supplied movie ID",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class))})
+    })
     @GetMapping("movie/{id}")
     public ResponseEntity<Collection<Character>> findAllCharactersByMovieId(@PathVariable int id) {
         return ResponseEntity.ok(characterService.findAllCharactersByMovieId(id));
     }
 
     @Operation(summary = "Get characters in a franchise")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Success",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CharacterDTO.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Characters do not exist with supplied franchise ID",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class))})
+    })
     @GetMapping("franchise/{id}")
     public ResponseEntity<Collection<Character>> findAllCharactersByFranchiseId(@PathVariable int id) {
         return ResponseEntity.ok(characterService.findAllCharactersByFranchiseId(id));
@@ -61,6 +112,18 @@ public class CharacterController {
     }
 
     @Operation(summary = "Update a character")
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Character successfully updated",
+                    content = @Content),
+            @ApiResponse(responseCode = "400",
+                    description = "Malformed request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Character not found with supplied ID",
+                    content = @Content)
+    })
     @PutMapping("{id}")
     public ResponseEntity update(@RequestBody CharacterDTO characterDTO, @PathVariable int id) {
         if (id != characterDTO.getId())

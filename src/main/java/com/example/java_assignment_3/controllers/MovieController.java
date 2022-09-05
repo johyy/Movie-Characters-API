@@ -2,9 +2,17 @@ package com.example.java_assignment_3.controllers;
 
 import com.example.java_assignment_3.mappers.MovieMapper;
 import com.example.java_assignment_3.models.Movie;
+import com.example.java_assignment_3.models.dtos.character.CharacterDTO;
 import com.example.java_assignment_3.models.dtos.movie.MovieDTO;
 import com.example.java_assignment_3.services.movie.MovieService;
+import com.example.java_assignment_3.util.ApiErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +32,20 @@ public class MovieController {
     }
 
     @Operation(summary = "Get all movies")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Success",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = MovieDTO.class))) }),
+            @ApiResponse(responseCode = "404",
+                    description = "Movie does not exist with supplied ID",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = ApiErrorResponse.class)) })
+    })
     @GetMapping
     public ResponseEntity findAll() {
         Collection<MovieDTO> movies = movieMapper.movieToMovieDto(movieService.findAll());
@@ -31,12 +53,36 @@ public class MovieController {
     }
 
     @Operation(summary = "Get movies in a franchise")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Success",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = MovieDTO.class))) }),
+            @ApiResponse(responseCode = "404",
+                    description = "Movies do not exist with supplied franchise ID",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = ApiErrorResponse.class)) })
+    })
     @GetMapping("franchise/{id}")
     public ResponseEntity<Collection<Movie>> findAllMoviesByFranchiseId(@PathVariable int id) {
         return ResponseEntity.ok(movieService.findAllMoviesByFranchiseId(id));
     }
 
-    @Operation(summary = "Get a movie")
+    @Operation(summary = "Get a movie by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Success",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MovieDTO.class)) }),
+            @ApiResponse(responseCode = "404",
+                    description = "Movie does not exist with supplied ID",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class)) })
+    })
     @GetMapping("{id}")
     public ResponseEntity findById(@PathVariable int id){
         MovieDTO movie = movieMapper.movieToMovieDto(movieService.findById(id));
@@ -53,6 +99,18 @@ public class MovieController {
     }
 
     @Operation(summary = "Update a movie")
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Movie successfully updated",
+                    content = @Content),
+            @ApiResponse(responseCode = "400",
+                    description = "Malformed request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Movie not found with supplied ID",
+                    content = @Content)
+    })
     @PutMapping("{id}")
     public ResponseEntity update(@RequestBody MovieDTO movieDTO, @PathVariable int id) {
         if (id != movieDTO.getId())

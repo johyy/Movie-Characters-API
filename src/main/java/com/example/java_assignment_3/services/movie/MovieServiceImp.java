@@ -1,5 +1,7 @@
 package com.example.java_assignment_3.services.movie;
 
+import com.example.java_assignment_3.exceptions.CharacterNotFoundException;
+import com.example.java_assignment_3.exceptions.MovieNotFoundException;
 import com.example.java_assignment_3.models.Movie;
 import com.example.java_assignment_3.repositories.MovieRepository;
 import org.slf4j.Logger;
@@ -20,7 +22,7 @@ public class MovieServiceImp implements  MovieService {
 
     @Override
     public Movie findById(Integer id) {
-        return movieRepository.findById(id).get();
+        return movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
     }
 
     @Override
