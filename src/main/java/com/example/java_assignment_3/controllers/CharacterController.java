@@ -133,6 +133,18 @@ public class CharacterController {
     }
 
     @Operation(summary = "Delete a character")
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Character successfully deleted",
+                    content = @Content),
+            @ApiResponse(responseCode = "400",
+                    description = "Malformed request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Character not found with supplied ID",
+                    content = @Content)
+    })
     @Transactional
     @DeleteMapping("{id}")
     public ResponseEntity delete(@PathVariable int id) {
