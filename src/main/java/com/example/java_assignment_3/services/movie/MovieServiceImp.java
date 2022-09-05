@@ -8,7 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class MovieServiceImp implements  MovieService {
@@ -48,5 +50,24 @@ public class MovieServiceImp implements  MovieService {
     @Override
     public Collection<Movie> findAllMoviesByFranchiseId(int id) {
         return movieRepository.findAllMoviesByFranchiseId(id);
+    }
+
+    @Override
+    @Transactional
+    public void nullAllMoviesWithCertainFranchiseId(int id) {
+        movieRepository.nullAllMoviesWithCertainFranchiseId(id);
+    }
+
+    @Override
+    @Transactional
+    public void setFranchiseIdToSpecifiedMovieIds(int fra_id, int movie_id) {
+        movieRepository.setFranchiseIdToSpecifiedMovieIds(fra_id, movie_id);
+    }
+
+    @Override
+    public Movie updateCharacterInMovie(List<Integer> ids, int id){
+        Movie movie = movieRepository.findById(id).get();
+        movie.updateCharactersToMovie(ids);
+        return movieRepository.save(movie);
     }
 }
