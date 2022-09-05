@@ -103,6 +103,16 @@ public class CharacterController {
     }
 
     @Operation(summary = "Adds a new character")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Success",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MovieDTO.class)) }),
+            @ApiResponse(responseCode = "500",
+                    description = "Internal server error",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class)) })
+    })
     @PostMapping
     public ResponseEntity add(@RequestBody Character character) {
         Character c = characterService.add(character);
@@ -143,7 +153,11 @@ public class CharacterController {
                             schema = @Schema(implementation = ErrorAttributeOptions.class))}),
             @ApiResponse(responseCode = "404",
                     description = "Character not found with supplied ID",
-                    content = @Content)
+                    content = @Content),
+            @ApiResponse(responseCode = "500",
+                    description = "Internal server error",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))})
     })
     @Transactional
     @DeleteMapping("{id}")
