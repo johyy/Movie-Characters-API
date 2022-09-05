@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping(path="api/v1/movies")
@@ -66,6 +67,13 @@ public class MovieController {
     @DeleteMapping("{id}")
     public ResponseEntity delete(@PathVariable int id) {
         movieService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Updates characters in movie")
+    @PutMapping("characters/movie/{id}")
+    public ResponseEntity updateCharacterInMovie(@RequestBody List<Integer> ids, @PathVariable int id){
+        movieService.updateCharacterInMovie(ids,id);
         return ResponseEntity.noContent().build();
     }
 }

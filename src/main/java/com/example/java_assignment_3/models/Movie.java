@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -65,6 +66,21 @@ public class Movie {
             if(chars.getId() == character.getId()){
                 iter.remove();
             }
+        }
+    }
+
+    public void updateCharactersToMovie(List<Integer> ids){
+        Iterator<Character> iter = characters.iterator();
+        Set<Character> delete = new HashSet<>();
+        while(iter.hasNext()) {
+            Character chara = iter.next();
+            delete.add(chara);
+        }
+        characters.removeAll(delete);
+        for(int id : ids){
+            Character chars = new Character();
+            chars.setId(id);
+            characters.add(chars);
         }
     }
 }

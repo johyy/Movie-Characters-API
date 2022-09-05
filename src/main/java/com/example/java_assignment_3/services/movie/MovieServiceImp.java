@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class MovieServiceImp implements  MovieService {
@@ -46,5 +47,13 @@ public class MovieServiceImp implements  MovieService {
     @Override
     public Collection<Movie> findAllMoviesByFranchiseId(int id) {
         return movieRepository.findAllMoviesByFranchiseId(id);
+    }
+
+    @Override
+    public Movie updateCharacterInMovie(List<Integer> ids, int id){
+        Movie movie = movieRepository.findById(id).get();
+        movie.updateCharactersToMovie(ids);
+        return movieRepository.save(movie);
+
     }
 }
