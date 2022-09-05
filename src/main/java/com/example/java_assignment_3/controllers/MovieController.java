@@ -40,8 +40,8 @@ public class MovieController {
                             @Content(
                                     mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = MovieDTO.class))) }),
-            @ApiResponse(responseCode = "404",
-                    description = "Movie does not exist with supplied ID",
+            @ApiResponse(responseCode = "500",
+                    description = "Internal server error",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -91,6 +91,20 @@ public class MovieController {
     }
 
     @Operation(summary = "Add a new movie")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Success",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MovieDTO.class)) }),
+            @ApiResponse(responseCode = "404",
+                    description = "Movie does not exist with supplied ID",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class)) }),
+            @ApiResponse(responseCode = "500",
+                    description = "Internal server error",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class)) })
+    })
     @PostMapping
     public ResponseEntity add(@RequestBody Movie movie) {
         Movie m = movieService.add(movie);
@@ -122,6 +136,22 @@ public class MovieController {
     }
 
     @Operation(summary = "Delete a movie")
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Movie successfully updated",
+                    content = @Content),
+            @ApiResponse(responseCode = "400",
+                    description = "Malformed request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Movie not found with supplied ID",
+                    content = @Content),
+            @ApiResponse(responseCode = "500",
+                    description = "Internal server error",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))})
+    })
     @DeleteMapping("{id}")
     public ResponseEntity delete(@PathVariable int id) {
         movieService.deleteById(id);
@@ -129,6 +159,22 @@ public class MovieController {
     }
 
     @Operation(summary = "Update movies in specified franchise")
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Movie successfully updated",
+                    content = @Content),
+            @ApiResponse(responseCode = "400",
+                    description = "Malformed request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Movie not found with supplied ID",
+                    content = @Content),
+            @ApiResponse(responseCode = "500",
+                    description = "Internal server error",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))})
+    })
     @PutMapping("franchise/update/{id}")
     public ResponseEntity updateMoviesInFranchise(@RequestBody FranchiseDTO franchiseDTO, @PathVariable int id) {
         if (id != franchiseDTO.getId())
@@ -141,6 +187,22 @@ public class MovieController {
     }
 
     @Operation(summary = "Update characters in specified movie")
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Movie successfully updated",
+                    content = @Content),
+            @ApiResponse(responseCode = "400",
+                    description = "Malformed request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Movie not found with supplied ID",
+                    content = @Content),
+            @ApiResponse(responseCode = "500",
+                    description = "Internal server error",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))})
+    })
     @PutMapping("characters/movie/{id}")
     public ResponseEntity updateCharacterInMovie(@RequestBody List<Integer> ids, @PathVariable int id){
         movieService.updateCharacterInMovie(ids,id);
