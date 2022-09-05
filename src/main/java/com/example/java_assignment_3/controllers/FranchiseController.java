@@ -72,6 +72,16 @@ public class FranchiseController {
     }
 
     @Operation(summary = "Add a new franchise")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Success",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MovieDTO.class)) }),
+            @ApiResponse(responseCode = "500",
+                    description = "Internal server error",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class)) })
+    })
     @PostMapping
     public ResponseEntity add(@RequestBody Franchise franchise) {
         Franchise fra = franchiseServise.add(franchise);
@@ -103,6 +113,22 @@ public class FranchiseController {
     }
 
     @Operation(summary = "Delete a franchise")
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Franchise successfully deleted",
+                    content = @Content),
+            @ApiResponse(responseCode = "400",
+                    description = "Malformed request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "Franchise not found with supplied ID",
+                    content = @Content),
+            @ApiResponse(responseCode = "500",
+                    description = "Internal server error",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAttributeOptions.class))})
+    })
     @DeleteMapping("{id}")
     public ResponseEntity delete(@PathVariable int id) {
         franchiseServise.deleteById(id);

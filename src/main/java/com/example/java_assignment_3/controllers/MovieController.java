@@ -96,10 +96,6 @@ public class MovieController {
                     description = "Success",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = MovieDTO.class)) }),
-            @ApiResponse(responseCode = "404",
-                    description = "Movie does not exist with supplied ID",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ApiErrorResponse.class)) }),
             @ApiResponse(responseCode = "500",
                     description = "Internal server error",
                     content = { @Content(mediaType = "application/json",
@@ -138,7 +134,7 @@ public class MovieController {
     @Operation(summary = "Delete a movie")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "204",
-                    description = "Movie successfully updated",
+                    description = "Movie successfully deleted",
                     content = @Content),
             @ApiResponse(responseCode = "400",
                     description = "Malformed request",
