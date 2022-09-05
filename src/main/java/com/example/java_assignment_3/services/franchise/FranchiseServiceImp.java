@@ -1,7 +1,7 @@
 package com.example.java_assignment_3.services.franchise;
 
+import com.example.java_assignment_3.exceptions.FranchiseNotFoundException;
 import com.example.java_assignment_3.models.Franchise;
-import com.example.java_assignment_3.models.Movie;
 import com.example.java_assignment_3.repositories.FranchiseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ public class FranchiseServiceImp implements FranchiseService {
 
     @Override
     public Franchise findById(Integer id) {
-        return franchiseRepository.findById(id).get();
+        return franchiseRepository.findById(id).orElseThrow(() -> new FranchiseNotFoundException(id));
     }
 
     @Override
