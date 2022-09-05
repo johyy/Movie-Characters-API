@@ -28,6 +28,10 @@ public class Character {
         return id;
     }
 
+    public Set<Movie> getMovies() {
+        return movies;
+    }
+
     @PreRemove
     public void removeCharacterFromMovie(){
         for (Movie m : movies){

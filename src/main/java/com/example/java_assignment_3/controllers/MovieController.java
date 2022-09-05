@@ -2,7 +2,7 @@ package com.example.java_assignment_3.controllers;
 
 import com.example.java_assignment_3.mappers.MovieMapper;
 import com.example.java_assignment_3.models.Movie;
-import com.example.java_assignment_3.models.dtos.character.CharacterDTO;
+import com.example.java_assignment_3.models.dtos.franchise.FranchiseDTO;
 import com.example.java_assignment_3.models.dtos.movie.MovieDTO;
 import com.example.java_assignment_3.services.movie.MovieService;
 import com.example.java_assignment_3.util.ApiErrorResponse;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping(path="api/v1/movies")
@@ -124,6 +125,25 @@ public class MovieController {
     @DeleteMapping("{id}")
     public ResponseEntity delete(@PathVariable int id) {
         movieService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Update movies in specified franchise")
+    @PutMapping("franchise/update/{id}")
+    public ResponseEntity updateMoviesInFranchise(@RequestBody FranchiseDTO franchiseDTO, @PathVariable int id) {
+        if (id != franchiseDTO.getId())
+            return  ResponseEntity.badRequest().build();
+        movieService.nullAllMoviesWithCertainFranchiseId(id);
+        for (int movie_id : franchiseDTO.getMovies()) {
+            movieService.setFranchiseIdToSpecifiedMovieIds(id, movie_id);
+        }
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Update characters in specified movie")
+    @PutMapping("characters/movie/{id}")
+    public ResponseEntity updateCharacterInMovie(@RequestBody List<Integer> ids, @PathVariable int id){
+        movieService.updateCharacterInMovie(ids,id);
         return ResponseEntity.noContent().build();
     }
 }
